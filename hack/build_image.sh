@@ -15,8 +15,13 @@ export ROOTFS_DIR="$(realpath kata-containers/tools/osbuilder/rootfs-builder/roo
 
 # sudo install -o root -g root -m 0550 -t "${ROOTFS_DIR}/usr/bin" "${ROOTFS_DIR}/../../../../src/agent/target/x86_64-unknown-linux-musl/release/kata-agent"
 
+if [[ "${AGENT_INIT}" == "no" ]]; then
+sudo install -o root -g root -m 0440 "${ROOTFS_DIR}/../../../../src/agent/kata-agent.service" "${ROOTFS_DIR}/usr/lib/systemd/system/"
+sudo install -o root -g root -m 0440 "${ROOTFS_DIR}/../../../../src/agent/kata-containers.target" "${ROOTFS_DIR}/usr/lib/systemd/system/"
+fi
+
 pushd  kata-containers/tools/osbuilder/image-builder
-sudo -E http_proxy=$HTTP_PROXY https_proxy=$HTTPS_PROXY USE_DOCKER=true AGENT_INIT=yes ./image_builder.sh "${ROOTFS_DIR}"
+sudo -E USE_DOCKER=true AGENT_INIT=$AGENT_INIT ./image_builder.sh "${ROOTFS_DIR}"
 popd
 
 sudo rm -rf /opt/kata/share/wetee/

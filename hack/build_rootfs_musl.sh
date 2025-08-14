@@ -12,6 +12,7 @@ DIR=$(realpath "$DIR/../")
 cd $DIR
 
 export LIBC=musl;
+export AGENT_INIT=no
 export distro="alpine"
 export ROOTFS_DIR="$(realpath kata-containers/tools/osbuilder/rootfs-builder/rootfs)"
 
@@ -19,5 +20,7 @@ sudo rm -rf "${ROOTFS_DIR}"
 source hack/build_agent.sh
 
 pushd kata-containers/tools/osbuilder/rootfs-builder
-sudo -E USE_DOCKER=true LIBC=$LIBC AGENT_SOURCE_BIN=${DIR}/kata-containers/src/agent/target/x86_64-unknown-linux-$LIBC/release/kata-agent AGENT_INIT=yes ./rootfs.sh "${distro}"
+sudo -E USE_DOCKER=true LIBC=$LIBC AGENT_INIT=$AGENT_INIT AGENT_SOURCE_BIN=${DIR}/kata-containers/src/agent/target/x86_64-unknown-linux-$LIBC/release/kata-agent ./rootfs.sh "${distro}"
 popd
+
+source hack/build_image.sh

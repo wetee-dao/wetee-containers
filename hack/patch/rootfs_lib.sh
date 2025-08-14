@@ -33,7 +33,7 @@ build_rootfs() {
 
 	# Minimal set of device nodes needed when AGENT_INIT=yes so that the
 	# kernel can properly setup stdout/stdin/stderr for us
-	pushd $rootfs_dir/dev
-	MAKEDEV -v console tty ttyS null zero fd
-	popd
+	# pushd $rootfs_dir/dev
+	# MAKEDEV -v console tty ttyS null zero fd
+	# popd
 }
