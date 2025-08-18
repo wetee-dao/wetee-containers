@@ -12,7 +12,7 @@ DIR=$(realpath "$DIR/../")
 cd $DIR
 
 export LIBC=gnu;
-export AGENT_INIT=no
+export AGENT_INIT=yes
 export distro="debian"
 export ROOTFS_DIR="$(realpath kata-containers/tools/osbuilder/rootfs-builder/rootfs)"
 
@@ -26,7 +26,7 @@ cp hack/patch/rootfs_lib.sh $DEBIAN_DIR/rootfs_lib.sh
 
 pushd kata-containers/tools/osbuilder/rootfs-builder
 
-sudo -E OS_VERSION=bookworm LIBC=$LIBC AGENT_INIT=$AGENT_INIT AGENT_SOURCE_BIN=${DIR}/kata-containers/src/agent/target/x86_64-unknown-linux-$LIBC/release/kata-agent ./rootfs.sh "${distro}"
+sudo -E OS_VERSION=trixie LIBC=$LIBC AGENT_INIT=$AGENT_INIT AGENT_SOURCE_BIN=${DIR}/kata-containers/src/agent/target/x86_64-unknown-linux-$LIBC/release/kata-agent ./rootfs.sh "${distro}"
 popd
 
 rm $DEBIAN_DIR/rootfs_lib.sh 

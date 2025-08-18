@@ -1,6 +1,3 @@
-[submodule "kata-containers"]
-	path = kata-containers
-	url = https://github.com/wetee-dao/kata-containers
 [submodule "libos-entry"]
 	path = libos-entry
 	url = https://github.com/wetee-dao/libos-entry
