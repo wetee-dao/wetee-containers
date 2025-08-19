@@ -32,4 +32,11 @@ popd
 rm $DEBIAN_DIR/rootfs_lib.sh 
 mv $DEBIAN_DIR/rootfs_lib_back.sh $DEBIAN_DIR/rootfs_lib.sh 
 
+# build image
+source hack/build_image.sh
+
+# build confidential image
+sudo cp -r ./libs/pause_bundle  ${ROOTFS_DIR}
+sudo cp ./libs/bins/* ${ROOTFS_DIR}/usr/local/bin/
+export IMAGE_PREFIX="confidential-";
 source hack/build_image.sh
