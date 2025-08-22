@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: worker-addon
+  annotations:
+    field.cattle.io/containerDefaultResourceLimit: '{}'
+  labels:
+    {}

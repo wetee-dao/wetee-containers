@@ -25,9 +25,6 @@ sudo -E USE_DOCKER=true AGENT_INIT=$AGENT_INIT ./image_builder.sh "${ROOTFS_DIR}
 popd
 
 pushd kata-containers/tools/osbuilder/image-builder
-# commit="$(git log --format=%h -1 HEAD)"
-# date="$(date +%Y-%m-%d-%T.%N%z)"
 image="kata-${IMAGE_PREFIX}containers.img"
 install -m 0640 -D kata-containers.img "/opt/kata/wetee/${image}"
-# (cd /opt/kata/share/wetee/ && sudo ln -sf "$image" kata-containers.img)
 popd

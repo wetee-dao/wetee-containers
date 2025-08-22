@@ -19,24 +19,25 @@ export ROOTFS_DIR="$(realpath kata-containers/tools/osbuilder/rootfs-builder/roo
 sudo rm -rf "${ROOTFS_DIR}"
 source hack/build_agent.sh
 
-export DEBIAN_DIR="$(realpath kata-containers/tools/osbuilder/rootfs-builder/debian)"
+export BUILDER_DIR="$(realpath kata-containers/tools/osbuilder/rootfs-builder)"
 
-mv $DEBIAN_DIR/rootfs_lib.sh $DEBIAN_DIR/rootfs_lib_back.sh 
-cp hack/patch/rootfs_lib.sh $DEBIAN_DIR/rootfs_lib.sh
+mv $BUILDER_DIR/debian $BUILDER_DIR/debian_back
+cp -r hack/patch/debian $BUILDER_DIR/
 
 pushd kata-containers/tools/osbuilder/rootfs-builder
-
-sudo -E OS_VERSION=trixie LIBC=$LIBC AGENT_INIT=$AGENT_INIT AGENT_SOURCE_BIN=${DIR}/kata-containers/src/agent/target/x86_64-unknown-linux-$LIBC/release/kata-agent ./rootfs.sh "${distro}"
+sudo -E OS_VERSION=noble LIBC=$LIBC AGENT_INIT=$AGENT_INIT AGENT_SOURCE_BIN=${DIR}/kata-containers/src/agent/target/x86_64-unknown-linux-$LIBC/release/kata-agent ./rootfs.sh "${distro}"
 popd
 
-rm $DEBIAN_DIR/rootfs_lib.sh 
-mv $DEBIAN_DIR/rootfs_lib_back.sh $DEBIAN_DIR/rootfs_lib.sh 
+rm -rf $BUILDER_DIR/debian
+mv $BUILDER_DIR/debian_back $BUILDER_DIR/debian
 
 # build image
+sudo cp libos-entry/base-docker/ego/sgx_default_qcnl.conf ${ROOTFS_DIR}/etc
+# sudo cp libs/bins/sgx_verify ${ROOTFS_DIR}/usr/local/bin/
 source hack/build_image.sh
 
 # build confidential image
 sudo cp -r ./libs/pause_bundle  ${ROOTFS_DIR}
-sudo cp ./libs/bins/* ${ROOTFS_DIR}/usr/local/bin/
+sudo cp libs/bins/* ${ROOTFS_DIR}/usr/local/bin/
 export IMAGE_PREFIX="confidential-";
 source hack/build_image.sh

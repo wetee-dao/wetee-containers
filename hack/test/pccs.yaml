@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sgx-pccs-api
+  namespace: worker-addon
+spec:
+  selector:
+    matchLabels:
+      app: sgx-pccs-api
+  template:
+    metadata:
+      labels:
+        app: sgx-pccs-api
+    spec:
+      containers:
+        - image: wetee/pccs:250718
+          name: c1
+          ports:
+            - containerPort: 8081
+              name: wetee-pccs-8081
+              protocol: TCP

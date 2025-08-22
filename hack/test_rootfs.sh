@@ -19,7 +19,7 @@ export ROOTFS_DIR="$(realpath kata-containers/tools/osbuilder/rootfs-builder/roo
 # sudo mount -t sysfs sysfs $ROOTFS_DIR/sys
 
 # 进入 chroot
-sudo chroot $ROOTFS_DIR /bin/sh
+sudo chroot $ROOTFS_DIR /bin/bash
 
 # sudo umount $ROOTFS_DIR/proc
 # sudo umount -R $ROOTFS_DIR/sys
