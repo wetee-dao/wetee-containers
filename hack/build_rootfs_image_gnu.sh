@@ -32,8 +32,8 @@ rm -rf $BUILDER_DIR/debian
 mv $BUILDER_DIR/debian_back $BUILDER_DIR/debian
 
 # build image
-sudo cp libos-entry/base-docker/ego/sgx_default_qcnl.conf ${ROOTFS_DIR}/etc
-# sudo cp libs/bins/sgx_verify ${ROOTFS_DIR}/usr/local/bin/
+sudo cp $DIR/libos-entry/base-docker/ego/sgx_default_qcnl.conf ${ROOTFS_DIR}/etc
+sudo cp $DIR/libs/bins/sgx-verify ${ROOTFS_DIR}/usr/local/bin/
 source hack/build_image.sh
 
 # build confidential image
