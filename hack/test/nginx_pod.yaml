@@ -9,3 +9,5 @@ spec:
   containers:
   - name: c0
     image: nginx
+  - name: c1
+    image: busybox
